@@ -1,0 +1,24 @@
+# branch name must start with feature/ and contain CRLZ
+branch_pattern: '^feature\/.*_CRLZ[0-9]+$'
+
+# files that must be touched in this CR (optional)
+required_files:
+  - "docs/architecture.md"
+  - "modules/network/README.md"
+
+# paths that must not be modified by this CR
+forbidden_paths:
+  - "prod-secrets/"
+  - "infra/critical/"
+
+# maximum number of changed files allowed
+max_files: 50
+
+# labels to add to PR (auto-fix mode)
+required_labels:
+  - "architecture"
+  - "cr:review"
+
+# reviewers to request
+required_reviewers:
+  - "arch-team"

@@ -1,0 +1,65 @@
+name: Integration Proof Data well-governed LZv2, functional tests via OpenSource Standards, reusing modular worflows
+  
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  actions: write
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  job1:
+    uses: scgcptigerhub/gcp_master/.github/workflows/main.yml@main
+  upload:
+    name: Generate Build and Fetch Artefacts
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        version: [a, b, c]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Build core and allure reporting
+      run: ./Integration_Tests/Fetch_CSV.sh --version=${{ matrix.version }} > results.csv
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: results-${{ matrix.os }}-${{ matrix.version }}
+        path: Integration_Tests
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use output from Build Artefacts and Upload
+        run: |
+          echo "Tests output: ${{ needs.job1.outputs.tests_output }}"
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: npx modules for output converage reports
+        run: |
+          echo "Output: ${{ needs.job2.outputs.tests_output }}"
+          echo "Installment of dependencies to use Allure reports and npx"
+          npm install -g allure >> allureinstall.txt
+          npx allure run -test >> /dev/null  
+          exit ?
+          npx allure generate ./sciensano_data/
+  
+  
+
+     
+     
+    
+
+      
+   
+    

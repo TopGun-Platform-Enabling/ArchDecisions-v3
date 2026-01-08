@@ -1,0 +1,61 @@
+  {
+
+   "id": "EC2Resource",
+
+   "type": "Ec2Resource",
+
+   "instanceType": "m5.large",
+
+   "role": "DataPipelineDefaultResourceRole",
+
+   "resourceRole": "DataPipelineDefaultResourceRole",
+
+   "terminateAfter": "1 hour"
+
+  },
+
+  {
+
+   "id": "S3RawFolder",
+
+   "type": "S3DataNode",
+
+   "directoryPath": "s3://${s3_bucket}/raw/"
+
+  },
+
+  {
+
+   "id": "S3FilteredFolder",
+
+   "type": "S3DataNode",
+
+   "directoryPath": "s3://${s3_bucket}/filtered/"
+
+  },
+
+  {
+
+   "id": "FetchAndFilterActivity",
+
+   "type": "ShellCommandActivity",
+
+   "command": "bash -c 'mkdir -p /tmp/sciensano && aws s3 cp s3://${s3_bucket}/scripts/fetch_and_filter.sh /mnt/data/fetch_and_filter.sh && chmod +x /tmp/sciensano/fetch_and_filter.sh && /mnt/data/fetch_and_filter.sh s3://${s3_bucket}'",
+
+   "runsOn": { "ref": "EC2Resource" },
+
+   "output": { "ref": "S3FilteredFolder" },
+
+   "input": { "ref": "S3RawFolder" },
+
+   "schedule": { "ref": "DailySchedule" }
+
+  }
+
+ ],
+
+ "parameters": [],
+
+ "values": []
+
+}

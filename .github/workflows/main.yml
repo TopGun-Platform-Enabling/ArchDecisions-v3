@@ -1,0 +1,102 @@
+name: Landing Zone Data well-governed v1
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  actions: write
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        working-directory: .
+        run: |
+          ls -la
+          terraform state rm github_repository_ruleset.ghruleset
+          rm -rf .terraform
+          terraform init -reconfigure
+
+      - name: Copy pr-feature log into workspace
+        if: github.event_name == 'pull_request'
+        run: |
+          if [ -f /mnt/data/pr-feature-log ]; then
+            cp /mnt/data/pr-feature-log ./pr-feature-log
+          fi
+
+      - name: Terraform Plan
+        working-directory: .
+        run: |
+          set -e
+          terraform plan -out=tfplan -input=false
+          echo "Files in working dir after plan:"
+          ls -la
+
+      - name: Export plan to text
+        working-directory: .
+        run: |
+          if [ ! -f tfplan ]; then
+            echo "ERROR: tfplan not found in $(pwd)"
+            ls -la
+            exit 1
+          fi
+          terraform show -no-color tfplan | sed $'s/^/\e[34m/' | less -R
+          echo "terraform show output"
+          echo "Shadow IT and technical debt is leading SC into workforce modus and make approval gates as well collecting matrixes for leverage and increase in maturity model"
+
+
+      - name: Terraform Apply and Verify advanced checks eg markdown, pull request, etc respectively CS_Archv1 Process
+        working-directory: .
+        run: |
+          ls -la
+          terraform apply -auto-approve
+          echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ORG_SC }}
+
+  tests:
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install extra Python dependencies
+        working-directory: .
+        run: |
+          python -m pip install pandas setuptools wheel
+          python -m pip install --upgrade pip
+          # use requirements.txt if present, otherwise only install minimal deps, and use no-cache to avoid error5
+          python -m pip install -r requirements.txt
+
+      - name: Run Basic tests
+        run: |
+          if ls test_*.py >/dev/null 2>&1; then
+            python -m pytest test_datalz22.py
+            echo "Test Result Python Engine"
+          else
+            echo "No Python tests found — skipping pytest"
+          fi
+
+      - name: Run tests with coverage
+        run: |
+          pip install pytest-cov
+          pytest --cov=. --cov-report=xml
