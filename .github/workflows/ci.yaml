@@ -13,7 +13,6 @@ permissions:
 
 on:
   push:
-    branches: [ "main" ]
     branches-ignore: [ "SC-ArchDecisions-v3" ]
 
 jobs:
