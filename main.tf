@@ -9,6 +9,7 @@ terraform {
 
 provider "github" {
   owner = "scgcptigerhub"
+  org = "TopGunInit"
 }
 
 resource "github_team" "arch_pt_team" {
@@ -19,7 +20,7 @@ resource "github_team" "arch_pt_team" {
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
-  repository  = "gcp_master"
+  repository  = "TopGunInit/SC-ArchDecisions-v3"
   target      = "branch"
   enforcement = "active"
 
@@ -41,7 +42,7 @@ resource "github_repository_ruleset" "ghruleset" {
 
     required_status_checks {
       strict_required_status_checks_policy = false
-      do_not_enforce_on_create             = false
+      do_not_enforce_on_create             = true
 
       required_check {
         context        = "terraform"
