@@ -19,8 +19,8 @@ resource "github_membership" "membership_for_user_x" {
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
   repository  = "SC-ArchDecisions-v3"
-  target      = "pullrequest"
-  enforcement = "false"
+  target      = "push"
+  enforcement = "disabled"
 
   conditions {
     ref_name {
