@@ -9,7 +9,9 @@ terraform {
 }
 
 # Configure the GitHub Provider
-provider "github" {}
+provider "github" {
+  owner = "TopGunInit"   
+}
 
 resource "github_membership" "membership_for_user_x" {
   username = "scgcptigerhub"
