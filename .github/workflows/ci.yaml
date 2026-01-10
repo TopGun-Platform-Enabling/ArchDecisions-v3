@@ -1,4 +1,8 @@
-name: Integration Proof Data well-governed LZv2, functional tests via OpenSource Standards, reusing modular worflows
+name: Integration Proof Data well-governed v3, functional tests via OpenSource Standards, reusing modular workflows
+
+env:
+  NODE_VERSION: '20.x'
+  WORKING_DIRECTORY: ${{ github.workspace }}  
   
 permissions:
   contents: write
@@ -9,13 +13,14 @@ permissions:
 
 on:
   push:
-    branches: [ "main" ]
+    #branches: [ "main" ]
+    branches-ignore: [ "TopGunInit/SC-ArchDecisions-v3" ]
 
 jobs:
   job1:
-    uses: scgcptigerhub/gcp_master/.github/workflows/main.yml@main
+    uses: $WORKING_DIRECTORY/.github/workflows/main.yml@main
   upload:
-    name: Generate Build and Fetch Artefacts
+    name: Generate Build and Fetch Artifacts
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -34,9 +39,10 @@ jobs:
     needs: job1
     runs-on: ubuntu-latest
     steps:
-      - name: Use output from Build Artefacts and Upload
+      - name: Use output from Build Artifacts and Upload
         run: |
           echo "Tests output: ${{ needs.job1.outputs.tests_output }}"
+  
   job3:
     runs-on: ubuntu-latest
     steps:
@@ -45,21 +51,49 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           
-      - name: npx modules for output converage reports
+      - name: npx modules for output coverage reports
         run: |
           echo "Output: ${{ needs.job2.outputs.tests_output }}"
           echo "Installment of dependencies to use Allure reports and npx"
-          npm install -g allure >> allureinstall.txt
-          npx allure run -test >> /dev/null  
-          exit ?
-          npx allure generate ./sciensano_data/
-  
-  
+          npm install -g allure >> allure-install.txt
+          npx allure run -test >> $2_allure-results.txt || 
+          npx allure generate ./data/
+          npx allure open ./allure-report/
 
-     
-     
-    
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4    
+        with:
+          name: allure-report
+          retention-days: 5
+        run: |
+          echo "Allure report generated and uploaded, respectively retention of reports for 5 days.
+          npx allure generate ./allure-results/ --clean -o ./allure-report/
+          npx allure open ./allure-report/" 
 
+  job4:
+    needs: [job2, job3] 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Final Step - Summary
+        run: |
+          echo "All jobs completed. Summary of outputs:"
+          echo "Job 2 Output: ${{ needs.job2.outputs.tests_output }}"
+          echo "Allure report is available as an artifact." 
+
+  job5:
+    uses: $WORKING_DIRECTORY/.github/workflows/cleanup.yml@main 
+    needs: [job2, job3, job4]
+    if: always()
+    with:
+      cleanup: true
+    secrets: inherit
+    env:
+      NODE_VERSION: '20.x'
+      WORKING_DIRECTORY: ${{ github.workspace }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ALLURE_API_KEY: ${{ secrets.ALLURE_API_KEY }}
+      ALLURE_PROJECT_ID: ${{ secrets.ALLURE_PROJECT_ID }}
+      ALLURE_REPORT_URL: ${{ secrets.ALLURE_REPORT_URL }}
+      ALLURE_USERNAME: ${{ secrets.ALLURE_USERNAME }}
+      ALLURE_PASSWORD: ${{ secrets.ALLURE_PASSWORD }}
       
-   
-    
