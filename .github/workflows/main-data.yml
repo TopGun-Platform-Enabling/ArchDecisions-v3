@@ -72,7 +72,7 @@ jobs:
           terraform apply tfplan 
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_ORG_SC }}
+          TF_VAR_github_token: ${{ secrets.SC_ORG_GH }}
 
   tests:
     runs-on: ubuntu-latest
