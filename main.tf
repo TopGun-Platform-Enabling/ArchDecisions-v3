@@ -10,7 +10,8 @@ terraform {
 
 # Configure the GitHub Provider
 provider "github" {
-  owner = "TopGunInit"   
+  owner = "TopGunInit"
+  token = var.github_token
 }
 
 resource "github_membership" "membership_for_user_x" {
