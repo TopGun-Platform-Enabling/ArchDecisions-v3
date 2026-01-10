@@ -54,8 +54,8 @@ jobs:
         run: |
           echo "Output: ${{ needs.job2.outputs.tests_output }}"
           echo "Installment of dependencies to use Allure reports and npx"
-          npm install -g allure >> allure-install.txt
-          npx allure run -test >> $2_allure-results.txt || True
+          npm install -g allure-commandline --save-dev
+          npx allure run -test 
           npx allure generate ./allure-results
           npx allure open ./allure-report/
 
@@ -63,7 +63,7 @@ jobs:
         run: |
           echo "Allure report generated and uploaded, respectively retention of reports for 5 days.
           npx allure generate ./allure-results/ --clean -o ./allure-report/
-          npx allure open ./allure-report/" 
+          npx allure open ./allure-report/ 
 
   job4:
     needs: [job2, job3] 
