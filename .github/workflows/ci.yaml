@@ -13,12 +13,12 @@ permissions:
 
 on:
   push:
-    #branches: [ "main" ]
-    branches-ignore: [ "TopGunInit/SC-ArchDecisions-v3" ]
+    branches: [ "main" ]
+    branches-ignore: [ "SC-ArchDecisions-v3" ]
 
 jobs:
   job1:
-    uses: $WORKING_DIRECTORY/.github/workflows/main.yml@main
+    uses: $WORKING_DIRECTORY/.github/workflows/main-data.yml@main
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
