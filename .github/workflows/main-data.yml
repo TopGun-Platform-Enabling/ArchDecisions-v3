@@ -14,9 +14,8 @@ on:
   push:
     branches: [ "main,SC-ArchDecisions-v3" ]
   workflow_call: 
-   secrets:
-      GH_ORG_SC:
-        required: false
+     secrets:
+      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
   
 jobs:
   terraform:
@@ -69,7 +68,7 @@ jobs:
         working-directory: .
         run: |
           ls -la
-          terraform apply tfplan 
+          terraform apply -auto-approve
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
         env:
           TF_VAR_github_token: ${{ secrets.SC_ORG_GH }}
