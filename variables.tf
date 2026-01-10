@@ -15,3 +15,8 @@ variable "required_status_checks" {
   default     = []
 }
 
+variable "github_token" {
+  type = string
+}
+
+
