@@ -18,7 +18,7 @@ on:
 
 jobs:
   job1:
-    uses: $WORKING_DIRECTORY/.github/workflows/main-data.yml@main
+    uses:  ./.github/workflows/main-data.yml
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
