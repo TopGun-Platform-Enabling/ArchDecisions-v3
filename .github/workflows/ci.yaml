@@ -19,16 +19,24 @@ jobs:
   job1:
     secrets: inherit
     uses:  ./.github/workflows/main-data.yml
+      
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
       matrix:
         os: [ubuntu-latest]
         version: [a, b, c]
+        
     runs-on: ${{ matrix.os }}
+    
     steps:
+    
+    - name: CheckOut repo sources and artefacts
+      uses: actions/checkout@v3
+      
     - name: Build core and allure reporting
       run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
+      
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
@@ -46,6 +54,9 @@ jobs:
   job3:
     runs-on: ubuntu-latest
     steps:
+      - name: CheckOut repo sources and artefacts
+        uses: actions/checkout@v3
+    
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
