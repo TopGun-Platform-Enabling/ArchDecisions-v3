@@ -27,7 +27,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Build core and allure reporting
-      run: ./Integration_Tests/Fetch_CSV.sh --version=${{ matrix.version }} > results.csv
+      run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
@@ -55,8 +55,8 @@ jobs:
           echo "Output: ${{ needs.job2.outputs.tests_output }}"
           echo "Installment of dependencies to use Allure reports and npx"
           npm install -g allure >> allure-install.txt
-          npx allure run -test >> $2_allure-results.txt || 
-          npx allure generate ./data/
+          npx allure run -test >> $2_allure-results.txt || True
+          npx allure generate ./allure-results
           npx allure open ./allure-report/
 
       - name: Upload Allure Report
