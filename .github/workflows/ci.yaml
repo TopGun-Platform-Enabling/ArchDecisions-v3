@@ -50,21 +50,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          
-      - name: npx modules for output coverage reports
+
+      - name: Install Allure CLI
         run: |
-          echo "Output: ${{ needs.job2.outputs.tests_output }}"
-          echo "Installment of dependencies to use Allure reports and npx"
           npm install -g allure-commandline --save-dev
-          npx allure run -test 
-          npx allure generate ./allure-results
-          npx allure open ./allure-report/
+
+      - name: Generate Allure Report
+        run: |
+          echo "Generating Allure report"
+          npx allure generate ./allure-results --clean -o ./allure-report
 
       - name: Upload Allure Report
-        run: |
-          echo "Allure report generated and uploaded, respectively retention of reports for 5 days.
-          npx allure generate ./allure-results/ --clean -o ./allure-report/
-          npx allure open ./allure-report/ 
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: ./allure-report
 
   job4:
     needs: [job2, job3] 
