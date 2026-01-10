@@ -17,6 +17,7 @@ on:
 
 jobs:
   job1:
+    secrets: inherit
     uses:  ./.github/workflows/main-data.yml
   upload:
     name: Generate Build and Fetch Artifacts
