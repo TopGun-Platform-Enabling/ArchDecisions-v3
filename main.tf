@@ -12,15 +12,15 @@ terraform {
 provider "github" {}
 
 resource "github_membership" "membership_for_user_x" {
-  username = "krisdefraine"
+  username = "scgcptigerhub"
   role     = "admin"
 }
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
-  repository  = "TopGunInit/SC-ArchDecisions-v3"
-  target      = "pull-request"
-  enforcement = "active"
+  repository  = "SC-ArchDecisions-v3"
+  target      = "pullrequest"
+  enforcement = "false"
 
   conditions {
     ref_name {
