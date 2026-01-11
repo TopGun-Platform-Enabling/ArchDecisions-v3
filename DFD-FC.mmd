@@ -1,4 +1,6 @@
+```mermaid
 flowchart LR
+%% Processes
     subgraph Phase1["Phase 1 – Foundation & Standardization"]
         P1A[Baseline repo rulesets\n- Status checks\n- Approvals\n- Block force-push\n- Block deletions\n- PRs required\n- Signed commits\n- CODEOWNERS\n- Templates]
     end
@@ -46,7 +48,7 @@ flowchart LR
         P8C[AI architecture doc]
     end
 
-
+    %% Data flows
     P1A --> P2A --> P3A --> P4A --> P5A --> P6A --> P7A --> P8A
     P2A --> P2B --> P2C --> P2D
     P3A --> P3B --> P3C
@@ -55,3 +57,4 @@ flowchart LR
     P6A --> P6B --> P6C
     P7A --> P7B --> P7C
     P8A --> P8B --> P8C
+```
