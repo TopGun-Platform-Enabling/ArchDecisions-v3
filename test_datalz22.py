@@ -4,7 +4,7 @@ from datetime import datetime
 from dataclasses import dataclass
 
 # Target directory
-TARGET_DIR = "./sciensano_data"
+TARGET_DIR = "./allure-report"
 
 # Expected schema definitions
 expected_columns = {

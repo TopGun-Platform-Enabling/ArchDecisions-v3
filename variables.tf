@@ -16,7 +16,7 @@ variable "required_status_checks" {
 }
 
 variable "github_token" {
+  description = "Inherited Org token and env variable for reusability CI workflow"
   type = string
 }
-
 
