@@ -1,27 +1,29 @@
+# Use and init provider with non-deprecated versions
 terraform {
   required_providers {
     github = {
       source  = "integrations/github"
-      version = ">= 5.38.0"
+      version = "~> 6.0"
     }
   }
 }
 
+# Configure the GitHub Provider
 provider "github" {
-  owner = "scgcptigerhub"
+  owner = "TopGunInit"
+  token = var.github_token
 }
 
-resource "github_team" "arch_pt_team" {
-  name        = "ArchPTTeam"
-  description = "Architecture Platform Team"
-  privacy     = "secret"
+resource "github_membership" "membership_for_user_x" {
+  username = "scgcptigerhub"
+  role     = "admin"
 }
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
-  repository  = "gcp_master"
-  target      = "branch"
-  enforcement = "active"
+  repository  = "SC-ArchDecisions-v3"
+  target      = "push"
+  enforcement = "disabled"
 
   conditions {
     ref_name {
@@ -41,7 +43,7 @@ resource "github_repository_ruleset" "ghruleset" {
 
     required_status_checks {
       strict_required_status_checks_policy = false
-      do_not_enforce_on_create             = false
+      do_not_enforce_on_create             = true
 
       required_check {
         context        = "terraform"

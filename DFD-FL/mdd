@@ -1,0 +1,59 @@
+```mermaid
+flowchart LR
+%% Processes
+    subgraph Phase1["Phase 1 – Foundation & Standardization"]
+        P1A[Baseline repo rulesets\n- Status checks\n- Approvals\n- Block force-push\n- Block deletions\n- PRs required\n- Signed commits\n- CODEOWNERS\n- Templates]
+    end
+
+    subgraph Phase2["Phase 2 – Modular Governance Architecture"]
+        P2A[ruleset_base module]
+        P2B[ruleset_security module]
+        P2C[ruleset_data module]
+        P2D[Other modules:\n- ruleset_ci\n- ruleset_docs]
+    end
+
+    subgraph Phase3["Phase 3 – Org-level Governance"]
+        P3A[Org default rulesets]
+        P3B[Allowed repo types\n& branch patterns]
+        P3C[Required workflows\n(security, CI, SBOM)]
+    end
+
+    subgraph Phase4["Phase 4 – Automated Governance & Drift"]
+        P4A[Detect missing rulesets]
+        P4B[Auto-remediation PRs]
+        P4C[Scheduled audits\n& tagging]
+    end
+
+    subgraph Phase5["Phase 5 – Security & Compliance Expansion"]
+        P5A[Mandatory scans\n(CodeQL, deps, secrets)]
+        P5B[SBOM & policy checks]
+        P5C[Least privilege roles\n+ break-glass]
+    end
+
+    subgraph Phase6["Phase 6 – Observability & Reporting"]
+        P6A[Compliance dashboards]
+        P6B[Team/repo scores]
+        P6C[Drift & posture trends]
+    end
+
+    subgraph Phase7["Phase 7 – Architecture & Portfolio Governance"]
+        P7A[ADR & architecture templates]
+        P7B[Domain & dependency rules]
+        P7C[Service catalog & data contracts]
+    end
+
+    subgraph Phase8["Phase 8 – AI-assisted Governance"]
+        P8A[AI compliance review]
+        P8B[Risk scoring & recommendations]
+        P8C[AI architecture doc]
+    end
+
+    %% Data flows
+    P1A --> P2A --> P3A --> P4A --> P5A --> P6A --> P7A --> P8A
+    P2A --> P2B --> P2C --> P2D
+    P3A --> P3B --> P3C
+    P4A --> P4B --> P4C
+    P5A --> P5B --> P5C
+    P6A --> P6B --> P6C
+    P7A --> P7B --> P7C
+    P8A --> P8B --> P8C

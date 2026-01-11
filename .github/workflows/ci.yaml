@@ -13,27 +13,40 @@ permissions:
 
 on:
   push:
-    #branches: [ "main" ]
-    branches-ignore: [ "TopGunInit/SC-ArchDecisions-v3" ]
+    branches-ignore: [ "SC-ArchDecisions-v3" ]
 
 jobs:
   job1:
-    uses: $WORKING_DIRECTORY/.github/workflows/main.yml@main
+    uses:  ./.github/workflows/main-data.yml
+    secrets:
+      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
+
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
       matrix:
         os: [ubuntu-latest]
-        version: [a, b, c]
+        version: [a, b]
+        
     runs-on: ${{ matrix.os }}
+    
     steps:
+    
+    - name: CheckOut repo sources and artefacts
+      uses: actions/checkout@v3
+      
     - name: Build core and allure reporting
-      run: ./Integration_Tests/Fetch_CSV.sh --version=${{ matrix.version }} > results.csv
+      run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
+      
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: results-${{ matrix.os }}-${{ matrix.version }}
-        path: Integration_Tests
+        run: |
+          mkdir ./Integration_Tests
+          chmod 775 -R .
+          mv DataResults.csv ./Integration_Tests
+        path: ./Integration_Tests
 
   job2:
     needs: job1
@@ -46,29 +59,28 @@ jobs:
   job3:
     runs-on: ubuntu-latest
     steps:
+      - name: CheckOut repo sources and artefacts
+        uses: actions/checkout@v3
+    
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          
-      - name: npx modules for output coverage reports
+
+      - name: Install Allure CLI
         run: |
-          echo "Output: ${{ needs.job2.outputs.tests_output }}"
-          echo "Installment of dependencies to use Allure reports and npx"
-          npm install -g allure >> allure-install.txt
-          npx allure run -test >> $2_allure-results.txt || 
-          npx allure generate ./data/
-          npx allure open ./allure-report/
+          npm install -g allure-commandline --save-dev
+
+      - name: Generate Allure Report
+        run: |
+          echo "Generating Allure report"
+          npx allure generate ./allure-results --clean -o ./allure-report
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v4    
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          retention-days: 5
-        run: |
-          echo "Allure report generated and uploaded, respectively retention of reports for 5 days.
-          npx allure generate ./allure-results/ --clean -o ./allure-report/
-          npx allure open ./allure-report/" 
+          path: ./allure-report
 
   job4:
     needs: [job2, job3] 
@@ -80,20 +92,3 @@ jobs:
           echo "Job 2 Output: ${{ needs.job2.outputs.tests_output }}"
           echo "Allure report is available as an artifact." 
 
-  job5:
-    uses: $WORKING_DIRECTORY/.github/workflows/cleanup.yml@main 
-    needs: [job2, job3, job4]
-    if: always()
-    with:
-      cleanup: true
-    secrets: inherit
-    env:
-      NODE_VERSION: '20.x'
-      WORKING_DIRECTORY: ${{ github.workspace }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      ALLURE_API_KEY: ${{ secrets.ALLURE_API_KEY }}
-      ALLURE_PROJECT_ID: ${{ secrets.ALLURE_PROJECT_ID }}
-      ALLURE_REPORT_URL: ${{ secrets.ALLURE_REPORT_URL }}
-      ALLURE_USERNAME: ${{ secrets.ALLURE_USERNAME }}
-      ALLURE_PASSWORD: ${{ secrets.ALLURE_PASSWORD }}
-      
