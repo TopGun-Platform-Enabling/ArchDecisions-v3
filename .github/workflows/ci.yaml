@@ -19,7 +19,7 @@ jobs:
   job1:
     uses:  ./.github/workflows/main-data.yml
     secrets:
-      GITHUB_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   upload:
     name: Generate Build and Fetch Artifacts
