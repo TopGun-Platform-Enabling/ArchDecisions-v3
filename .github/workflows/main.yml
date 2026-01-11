@@ -1,3 +1,6 @@
+#Test setup for first landing zone
+#env variable to be tested
+
 name: Landing Zone Data well-governed v1
 
 permissions:
