@@ -21,7 +21,7 @@ jobs:
   terraform:
     uses: TopGunInit/SC-ArchDecisions-v3/.github/workflows/main-data.yml@main
     secrets:
-      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   upload:
     name: Generate Build and Fetch Artifacts
@@ -56,7 +56,7 @@ jobs:
         run: |
           echo "INHERIT_TOKEN length: ${#INHERIT_TOKEN}"
           env:
-          INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   job2:
     needs: terraform
