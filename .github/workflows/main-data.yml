@@ -15,7 +15,7 @@ on:
     branches: [ "main,SC-ArchDecisions-v3" ]
   workflow_call:
     secrets:
-      INHERIT_TOKEN:
+      GITHUB_TOKEN:
         required: true
   
 jobs:
@@ -72,7 +72,7 @@ jobs:
           terraform apply -auto-approve
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
           env:
-            INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   tests:
     runs-on: ubuntu-latest
