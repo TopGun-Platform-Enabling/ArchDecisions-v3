@@ -10,6 +10,7 @@ permissions:
   pull-requests: write
   id-token: write
   actions: write
+  deployments: write
 
 on:
   push:
@@ -43,10 +44,10 @@ jobs:
       with:
         name: results-${{ matrix.os }}-${{ matrix.version }}
         run: |
-          mkdir ./Integration_Tests
+          mkdir Integration_Tests
           chmod 775 -R .
           mv DataResults.csv ./Integration_Tests
-        path: ./Integration_Tests
+        path: Integration_Tests
 
   job2:
     needs: job1
@@ -80,7 +81,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: ./allure-report
+          path: allure-report
 
   job4:
     needs: [job2, job3] 
