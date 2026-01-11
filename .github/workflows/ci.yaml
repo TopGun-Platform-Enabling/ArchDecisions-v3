@@ -19,7 +19,7 @@ jobs:
   job1:
     uses:  ./.github/workflows/main-data.yml
     secrets:
-      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
+      github_token: ${{ secrets.GH_ORG_SC }}
 
   upload:
     name: Generate Build and Fetch Artifacts
