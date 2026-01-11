@@ -59,7 +59,7 @@ jobs:
           INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   job2:
-    needs: job1
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
       - name: Use output from Build Artifacts and Upload
