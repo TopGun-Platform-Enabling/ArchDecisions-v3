@@ -18,7 +18,9 @@ on:
 jobs:
   job1:
     uses:  ./.github/workflows/main-data.yml
-    secrets: inherit  
+    secrets:
+      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
+
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
