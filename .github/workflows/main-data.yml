@@ -15,7 +15,7 @@ on:
     branches: [ "main,SC-ArchDecisions-v3" ]
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
+      INHERIT_TOKEN:
         required: true
   
 jobs:
