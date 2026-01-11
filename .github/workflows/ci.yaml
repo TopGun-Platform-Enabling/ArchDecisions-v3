@@ -19,9 +19,12 @@ on:
 
 jobs:
   job1:
-    uses:  ./.github/workflows/main-data.yml
-    secrets:
+    - name: Debug token length
+      run: |
+      echo "INHERIT_TOKEN length: ${#INHERIT_TOKEN}"
+      env:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+      uses:  ./.github/workflows/main-data.yml
 
   upload:
     name: Generate Build and Fetch Artifacts
