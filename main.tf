@@ -14,16 +14,16 @@ provider "github" {
   token = var.github_token
 }
 
-resource "github_membership" "membership_for_user_x" {
-  username = "scgcptigerhub"
-  role     = "admin"
-}
+#resource "github_membership" "membership_for_user_x" {
+ # username = "scgcptigerhub"
+ # role     = "admin"
+#}
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
   repository  = "SC-ArchDecisions-v3"
   target      = "push"
-  enforcement = "disabled"
+  enforcement = "active"
 
   conditions {
     ref_name {
@@ -43,7 +43,7 @@ resource "github_repository_ruleset" "ghruleset" {
 
     required_status_checks {
       strict_required_status_checks_policy = false
-      do_not_enforce_on_create             = true
+      do_not_enforce_on_create             = false
 
       required_check {
         context        = "terraform"
