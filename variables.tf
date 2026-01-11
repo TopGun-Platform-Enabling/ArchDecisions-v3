@@ -15,5 +15,11 @@ variable "required_status_checks" {
   default     = []
 }
 
+variable "github_token" {
+  type        = string
+  description = "Name of the SC-ArchDecisions organization ruleset"
+}
+
+
 
 
