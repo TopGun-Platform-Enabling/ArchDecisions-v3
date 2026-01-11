@@ -18,8 +18,8 @@ on:
     branches-ignore: [ "SC-ArchDecisions-v3" ]
 
 jobs:
-  job1:
-    uses: ./.github/workflows/main-data.yml@main
+  terraform:
+    uses: ./.github/workflows/main-data.yml
     secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
