@@ -19,7 +19,7 @@ on:
 
 jobs:
   terraform:
-    uses: ./.github/workflows/main-data.yml
+    uses: .github/workflows/main-data.yml@main
     secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
