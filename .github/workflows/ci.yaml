@@ -2,8 +2,9 @@ name: Integration Proof Data well-governed v3, functional tests via OpenSource S
 
 env:
   NODE_VERSION: '20.x'
-  WORKING_DIRECTORY: ${{ github.workspace }}  
-  
+  WORKING_DIRECTORY: ${{ github.workspace }}
+  GITHUB_TOKEN: ${{ format('TF_VARS_{0}', secrets.INHERIT_TOKEN) }}
+
 permissions:
   contents: write
   issues: write
