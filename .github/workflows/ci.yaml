@@ -19,7 +19,7 @@ jobs:
   job1:
     uses:  ./.github/workflows/main-data.yml
     secrets:
-      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   upload:
     name: Generate Build and Fetch Artifacts
@@ -43,10 +43,10 @@ jobs:
       with:
         name: results-${{ matrix.os }}-${{ matrix.version }}
         run: |
-          mkdir ./Integration_Tests
+          mkdir Integration_Tests
           chmod 775 -R .
           mv DataResults.csv ./Integration_Tests
-        path: ./Integration_Tests
+        path: Integration_Tests
 
   job2:
     needs: job1
@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: ./allure-report
+          path: allure-report
 
   job4:
     needs: [job2, job3] 

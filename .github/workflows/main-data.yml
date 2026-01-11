@@ -9,13 +9,14 @@ permissions:
   pull-requests: write
   id-token: write
   actions: write
+  workflows: write
 
 on:
   push:
-    branches: [ "main,SC-ArchDecisions-v3" ]
+    branches: [ "main", "SC-ArchDecisions-v3" ]
   workflow_call: 
      secrets:
-      GH_ORG_SC: ${{ secrets.GH_ORG_SC }}
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
   
 jobs:
   terraform:
@@ -71,7 +72,7 @@ jobs:
           terraform apply -auto-approve
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
         env:
-          TF_VAR_github_token: ${{ secrets.SC_ORG_GH }}
+          TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
 
   tests:
     runs-on: ubuntu-latest
