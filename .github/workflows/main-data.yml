@@ -71,6 +71,8 @@ jobs:
           ls -la
           terraform apply -auto-approve
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
+          env:
+            INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   tests:
     runs-on: ubuntu-latest
