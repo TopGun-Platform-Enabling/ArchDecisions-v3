@@ -17,7 +17,7 @@ variable "required_status_checks" {
 
 variable "github_token" {
   type        = string
-  description = "Name of the SC-ArchDecisions organization ruleset"
+  description = "Name of the SC-Arch Inherited Org Token Hashed Value"
 }
 
 
