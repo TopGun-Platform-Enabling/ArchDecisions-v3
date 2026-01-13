@@ -23,7 +23,7 @@ resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
   repository  = "ArchDecisions-v3"
   target      = "push"
-  enforcement = "false"
+  enforcement = "disabled"
 
   conditions {
     ref_name {
