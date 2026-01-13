@@ -14,7 +14,7 @@ permissions:
 
 on:
   push:
-    branches: [ "main,SC-ArchDecisions-v3" ]
+    branches: [ "main, ArchDecisions-v3" ]
   workflow_call:
     secrets:
       INHERIT_TOKEN:
