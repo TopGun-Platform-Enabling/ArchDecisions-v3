@@ -2,7 +2,7 @@ name: Integration Proof Data well-governed v3, functional tests via OpenSource S
 
 env:
   NODE_VERSION: '20.x'
-  WORKING_DIRECTORY: ${{ github.workspace }}
+  WORKING_DIRECTORY: .
 
 permissions:
   contents: write
