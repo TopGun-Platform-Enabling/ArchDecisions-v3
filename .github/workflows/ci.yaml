@@ -24,8 +24,8 @@ jobs:
   # ---------------------------------------------------------
   terraform:
     uses: ./.github/workflows/main-data.yml
-    #secrets:
-      #INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+    secrets:
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   # ---------------------------------------------------------
   # 2. Run reusable workflow (Tests)
@@ -33,8 +33,8 @@ jobs:
   tests:
     needs: terraform
     uses: ./.github/workflows/main-data.yml
-    #secrets:
-      #INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+    secrets:
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   # ---------------------------------------------------------
   # 3. Build CSV + Upload artifacts (matrix)
