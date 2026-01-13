@@ -11,7 +11,7 @@ terraform {
 # Configure the GitHub Provider
 # ID 254608100
 provider "github" {
-  owner = "TopGun-Platformin-Enabling"
+  owner = "TopGun-Platform-Enabling"
   token = var.github_token
 }
 
