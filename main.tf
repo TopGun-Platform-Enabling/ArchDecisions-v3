@@ -9,11 +9,11 @@ terraform {
 }
 
 # Configure the GitHub Provider
+# ID 254608100
 provider "github" {
-  owner = "TG_PE"
+  owner = "TopGun-Platform-Enabling"
   token = var.github_token
 }
-
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
