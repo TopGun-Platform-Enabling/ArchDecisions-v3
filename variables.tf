@@ -1,6 +1,6 @@
 variable "name" {
   type        = string
-  description = "Name of the SC-ArchDecisions organization ruleset"
+  description = "Name of the SC-ArchDecisions repo ruleset"
 }
 
 variable "required_checks" {
