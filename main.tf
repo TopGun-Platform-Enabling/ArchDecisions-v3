@@ -10,7 +10,7 @@ terraform {
 
 # Configure the GitHub Provider
 provider "github" {
-  owner = "scgcptigerhub"
+  owner = "TG_PE"
   token = var.github_token
 }
 
