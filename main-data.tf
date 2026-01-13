@@ -10,14 +10,10 @@ terraform {
 
 # Configure the GitHub Provider
 provider "github" {
-  owner = "TG_PE"
+  owner = "TopGun-Platform-Enabling"
   token = var.github_token
 }
 
-resource "github_membership" "membership_for_user_x" {
- username = "scgcptigerhub"
- role     = "admin"
-}
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
