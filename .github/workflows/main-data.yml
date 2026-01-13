@@ -9,6 +9,8 @@ permissions:
   pull-requests: write
   id-token: write
   actions: write
+  artifact-metadata: read
+  repository-projects: write
 
 on:
   push:
@@ -69,6 +71,7 @@ jobs:
         working-directory: .
         run: |
           ls -la
+          export GITHUB_TOKEN = "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"
           terraform apply -auto-approve
           echo "Using key management and zero-trust exposure, only parsing PAT tokens, defined as per SC Architectural PTeam"
           env:
