@@ -14,10 +14,10 @@ provider "github" {
   token = var.github_token
 }
 
-#resource "github_membership" "membership_for_user_x" {
- # username = "scgcptigerhub"
- # role     = "admin"
-#}
+resource "github_membership" "membership_for_user_x" {
+ username = "scgcptigerhub"
+ role     = "admin"
+}
 
 resource "github_repository_ruleset" "ghruleset" {
   name        = var.name
