@@ -16,7 +16,7 @@ provider "github" {
 }
 
 
-resource "github_repositor_ruleset" "TigerHubv2" {
+resource "github_repository_ruleset" "TigerHubv2" {
   name        = var.name
   repository  = "ArchDecisions-v3"
   target      = "push"
@@ -44,12 +44,12 @@ resource "github_repositor_ruleset" "TigerHubv2" {
 
       required_check {
         context        = "terraform"
-        integration_id = 0
+        integration_id = 254608100
       }
 
       required_check {
         context        = "tests"
-        integration_id = 0
+        integration_id = 254608100
       }
     }
   }
