@@ -50,6 +50,7 @@ jobs:
           TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
         run: |
           set -e
+          terraform state rm github_repository_ruleset.ghruleset
           terraform plan -out=tfplan -input=false
           echo "Plan completed"
 
