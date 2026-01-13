@@ -10,7 +10,7 @@ terraform {
 
 # Configure the GitHub Provider
 provider "github" {
-  owner = "TopGun-Platform-Enabling"
+  owner = "scgcptigerhub"
   token = var.github_token
 }
 
