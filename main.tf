@@ -11,11 +11,12 @@ terraform {
 # Configure the GitHub Provider
 # ID 254608100
 provider "github" {
-  owner = "TopGun-Platform-Enabling"
+  owner = "scgcptigerhub"
   token = var.github_token
 }
 
-resource "github_repository_ruleset" "ghruleset" {
+
+resource "github_repositor_ruleset" "TigerHubv2" {
   name        = var.name
   repository  = "ArchDecisions-v3"
   target      = "push"
