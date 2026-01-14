@@ -15,15 +15,12 @@ provider "github" {
   token = var.github_token
 }
 
-<<<<<<< HEAD
 #resource "github_membership" "membership_for_user_x" {
  # username = "scgcptigerhub"
  # role     = "admin"
 #}
-=======
->>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 
-resource "github_repository_ruleset" "TigerHubv2" {
+resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   name        = var.name
   repository  = "ArchDecisions-v3"
   target      = "push"
@@ -47,16 +44,15 @@ resource "github_repository_ruleset" "TigerHubv2" {
 
     required_status_checks {
       strict_required_status_checks_policy = false
-      do_not_enforce_on_create             = false
+      do_not_enforce_on_create             = true
 
       required_check {
-        context        = "terraform"
-        integration_id = 254608100
+        context        = "terraform"    
       }
 
       required_check {
         context        = "tests"
-        integration_id = 254608100
+        #integration_id = 254608100
       }
     }
   }
