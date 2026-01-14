@@ -18,7 +18,8 @@ provider "github" {
 #resource "github_membership" "membership_for_user_x" {
 #  username = "scgcptigerhub"
 #  role     = "admin"
-#  depends_on = [github_repository.ArchDecisions-v3]}
+#  depends_on = [github_repository.ArchDecisions-v3]
+#}
 
 resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   name        = var.name
@@ -37,9 +38,8 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
       ]
     }
   }
-
+ 
   rules {
-    rules {
     creation                = true
     update                  = true
     deletion                = true
