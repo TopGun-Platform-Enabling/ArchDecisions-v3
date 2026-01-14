@@ -56,7 +56,13 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
         tool                      = "CodeQL"
       }
     }
-  }
-}
-  depends_on = [github_repository.ArchDecisions-v3]
-}
+      bypass_actors {
+      actors = ["scgcptigerhub"]
+      type   = "admins "
+    }
+
+    bypass_actors {
+      actors = ["TopGun-Platform-Enabling"]
+      type   = "teams"
+    }
+    
