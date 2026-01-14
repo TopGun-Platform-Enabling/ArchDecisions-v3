@@ -58,5 +58,3 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
     }
   }
 }
-  depends_on = var.github_repository
-}
