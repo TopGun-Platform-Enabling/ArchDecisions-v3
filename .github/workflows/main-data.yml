@@ -45,9 +45,9 @@ jobs:
         working-directory: .
         run: |
           set -e
-          for r in $(terraform state list | grep github_repository_ruleset); do
-          terraform state rm "$r" || true
-          done
+           terraform state list | grep github_repository_ruleset | tr -d '\r' | while read -r r; do
+           terraform state rm "$r" || true
+           done
           terraform plan -out=tfplan -input=false 
           echo "Terraform Validated and Plan is completed"
 
