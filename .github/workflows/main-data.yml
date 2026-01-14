@@ -37,10 +37,8 @@ jobs:
 
       - name: Terraform Init (clean state)
         working-directory: .
-        
         run: |
           echo "Cleaning Terraform state and reinitializing"
-          done
           terraform init -reconfigure
 
       - name: Terraform Plan
