@@ -40,8 +40,6 @@ jobs:
         
         run: |
           echo "Cleaning Terraform state and reinitializing"
-          for r in $(terraform state list | grep github_repository_ruleset); do
-          terraform state rm "$r" || true
           done
           terraform init -reconfigure
 
@@ -49,7 +47,8 @@ jobs:
         working-directory: .
         run: |
           set -e
-          terraform state rm github_repository_ruleset* || true
+          for r in $(terraform state list | grep github_repository_ruleset); do
+          terraform state rm "$r" || true
           terraform plan -out=tfplan -input=false 
           echo "Terraform Validated and Plan is completed"
 
