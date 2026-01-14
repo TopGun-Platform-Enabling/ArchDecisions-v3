@@ -47,6 +47,7 @@ jobs:
           set -e
           for r in $(terraform state list | grep github_repository_ruleset); do
           terraform state rm "$r" || true
+          done
           terraform plan -out=tfplan -input=false 
           echo "Terraform Validated and Plan is completed"
 
