@@ -39,8 +39,8 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   }
 
   rules {
-    update = true
-    update_allows_fetch_and_merge = true
+    update = false
+    update_allows_fetch_and_merge = false
 
     required_status_checks {
       strict_required_status_checks_policy = false
