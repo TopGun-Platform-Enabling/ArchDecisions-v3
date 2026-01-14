@@ -10,8 +10,7 @@ permissions:
   pull-requests: write
   id-token: write
   actions: write
-<<<<<<< HEAD
-  workflows: write
+  security-events: write
 
 on:
   push:
@@ -20,21 +19,6 @@ on:
      secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
   
-=======
-  artifact-metadata: read
-  repository-projects: write
-
-on:
-  push:
-    branches:
-      - main
-      - ArchDecisions-v3
-  workflow_call:
-    secrets:
-      INHERIT_TOKEN:
-        required: true
-
->>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -62,9 +46,9 @@ jobs:
           TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
         run: |
           set -e
-          terraform state rm github_repository_ruleset.ghruleset
-          terraform plan -out=tfplan -input=false
-          echo "Plan completed"
+          terraform state rm github_repository_ruleset* || true
+          terraform plan -out=tfplan -input=false 
+          echo "Terraform Validated and Plan is completed"
 
       - name: Show Terraform Plan (text output)
         working-directory: .
@@ -77,15 +61,10 @@ jobs:
 
       - name: Terraform Apply
         working-directory: .
+        run: |
+          terraform apply -input=false -auto-approve tfplan
         env:
           TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
-<<<<<<< HEAD
-=======
-        run: |
-          echo "Applying Terraform changes"
-          terraform apply -auto-approve
-          echo "Terraform apply completed"
->>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 
   tests:
     runs-on: ubuntu-latest
