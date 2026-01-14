@@ -58,5 +58,5 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
     }
   }
 }
-  depends_on = [github_repository.ArchDecisions-v3]
+  depends_on = var.github_repository
 }
