@@ -2,74 +2,97 @@ name: Integration Proof Data well-governed v3, functional tests via OpenSource S
 
 env:
   NODE_VERSION: '20.x'
-  WORKING_DIRECTORY: ${{ github.workspace }}  
-  
+  WORKING_DIRECTORY: .
+
 permissions:
   contents: write
   issues: write
   pull-requests: write
   id-token: write
   actions: write
+  artifact-metadata: read
+  repository-projects: write
 
 on:
   push:
-    branches-ignore: [ "SC-ArchDecisions-v3" ]
+    branches-ignore: [ "ArchDecisions-v3" ]
 
 jobs:
+<<<<<<< HEAD
   job1:
     uses:  ./.github/workflows/main-data.yml
     secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+=======
+>>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 
+  # ---------------------------------------------------------
+  # 1. Run reusable workflow (Terraform)
+  # ---------------------------------------------------------
+  terraform:
+    uses: ./.github/workflows/main-data.yml
+    secrets:
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+
+  # ---------------------------------------------------------
+  # 2. Run reusable workflow (Tests)
+  # ---------------------------------------------------------
+  tests:
+    needs: terraform
+    uses: ./.github/workflows/main-data.yml
+    secrets:
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+
+  # ---------------------------------------------------------
+  # 3. Build CSV + Upload artifacts (matrix)
+  # ---------------------------------------------------------
   upload:
     name: Generate Build and Fetch Artifacts
     strategy:
       matrix:
         os: [ubuntu-latest]
         version: [a, b]
-        
     runs-on: ${{ matrix.os }}
-    
+
     steps:
-    
-    - name: CheckOut repo sources and artefacts
-      uses: actions/checkout@v3
-      
-    - name: Build core and allure reporting
-      run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
-      
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: results-${{ matrix.os }}-${{ matrix.version }}
+      - name: CheckOut repo sources and artifacts
+        uses: actions/checkout@v3
+
+      - name: Build core and allure reporting
+        run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
+
+      - name: Prepare artifact folder
         run: |
           mkdir Integration_Tests
           chmod 775 -R .
           mv DataResults.csv ./Integration_Tests
+<<<<<<< HEAD
         path: Integration_Tests
+=======
+>>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 
-  job2:
-    needs: job1
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.os }}-${{ matrix.version }}
+          path: Integration_Tests
+
+  # ---------------------------------------------------------
+  # 4. Generate Allure report
+  # ---------------------------------------------------------
+  allure:
     runs-on: ubuntu-latest
     steps:
-      - name: Use output from Build Artifacts and Upload
-        run: |
-          echo "Tests output: ${{ needs.job1.outputs.tests_output }}"
-  
-  job3:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CheckOut repo sources and artefacts
+      - name: CheckOut repo sources and artifacts
         uses: actions/checkout@v3
-    
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Allure CLI
-        run: |
-          npm install -g allure-commandline --save-dev
+        run: npm install -g allure-commandline --save-dev
 
       - name: Generate Allure Report
         run: |
@@ -82,13 +105,15 @@ jobs:
           name: allure-report
           path: allure-report
 
-  job4:
-    needs: [job2, job3] 
+  # ---------------------------------------------------------
+  # 5. Final summary
+  # ---------------------------------------------------------
+  summary:
+    needs: [tests, allure]
     runs-on: ubuntu-latest
     steps:
       - name: Final Step - Summary
         run: |
           echo "All jobs completed. Summary of outputs:"
-          echo "Job 2 Output: ${{ needs.job2.outputs.tests_output }}"
-          echo "Allure report is available as an artifact." 
-
+          echo "Terraform + tests reusable workflow completed."
+          echo "Allure report is available as an artifact."

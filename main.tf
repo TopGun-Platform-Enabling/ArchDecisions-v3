@@ -9,19 +9,23 @@ terraform {
 }
 
 # Configure the GitHub Provider
+# ID 254608100
 provider "github" {
-  owner = "TopGunInit"
+  owner = "TopGun-Platform-Enabling"
   token = var.github_token
 }
 
+<<<<<<< HEAD
 #resource "github_membership" "membership_for_user_x" {
  # username = "scgcptigerhub"
  # role     = "admin"
 #}
+=======
+>>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
 
-resource "github_repository_ruleset" "ghruleset" {
+resource "github_repository_ruleset" "TigerHubv2" {
   name        = var.name
-  repository  = "SC-ArchDecisions-v3"
+  repository  = "ArchDecisions-v3"
   target      = "push"
   enforcement = "active"
 
@@ -47,12 +51,12 @@ resource "github_repository_ruleset" "ghruleset" {
 
       required_check {
         context        = "terraform"
-        integration_id = 0
+        integration_id = 254608100
       }
 
       required_check {
         context        = "tests"
-        integration_id = 0
+        integration_id = 254608100
       }
     }
   }
