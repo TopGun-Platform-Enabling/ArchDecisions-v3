@@ -25,6 +25,8 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     continue-on-error: true
+    env:
+          TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -35,8 +37,7 @@ jobs:
 
       - name: Terraform Init (clean state)
         working-directory: .
-        env:
-          TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
+        
         run: |
           echo "Cleaning Terraform state and reinitializing"
           rm -rf .terraform
@@ -44,8 +45,6 @@ jobs:
 
       - name: Terraform Plan
         working-directory: .
-        env:
-          TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
           terraform state rm github_repository_ruleset* || true
@@ -65,9 +64,7 @@ jobs:
         working-directory: .
         run: |
           terraform apply -input=false -auto-approve tfplan
-        env:
-          TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
-
+        
   tests:
     runs-on: ubuntu-latest
     needs: terraform
