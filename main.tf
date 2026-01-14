@@ -23,7 +23,7 @@ provider "github" {
 resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   name        = var.name
   repository  = "ArchDecisions-v3"
-  target      = "push"
+  target      = "branch"
   enforcement = "active"
 
   conditions {
@@ -39,21 +39,25 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   }
 
   rules {
-    update = true
-    update_allows_fetch_and_merge = true
+    rules {
+    creation                = true
+    update                  = true
+    deletion                = true
+    required_signatures     = true
 
-    required_status_checks {
-      strict_required_status_checks_policy = false
-      do_not_enforce_on_create             = true
+    required_deployments {
+      required_deployment_environments = [" "]
+    }
 
-      required_check {
-        context        = "terraform"    
-      }
-
-      required_check {
-        context        = "tests"
-        #integration_id = 254608100
+    required_code_scanning {
+      required_code_scanning_tool {
+        alerts_threshold          = "errors"
+        security_alerts_threshold = "high_or_higher"
+        tool                      = "CodeQL"
       }
     }
   }
+}
+
+  depends_on = [github_repository.ArchDecisions-v3]
 }
