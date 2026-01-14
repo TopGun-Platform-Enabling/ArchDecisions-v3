@@ -40,7 +40,9 @@ jobs:
         
         run: |
           echo "Cleaning Terraform state and reinitializing"
-          rm -rf .terraform
+          for r in $(terraform state list | grep github_repository_ruleset); do
+          terraform state rm "$r" || true
+          done
           terraform init -reconfigure
 
       - name: Terraform Plan
