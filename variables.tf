@@ -16,17 +16,7 @@ variable "required_status_checks" {
 }
 
 variable "github_token" {
-<<<<<<< HEAD
   description = "Inherited Org token and env variable for reusability CI workflow"
   type = string
 }
 
-=======
-  type        = string
-  description = "Name of the SC-Arch Inherited Org Token Hashed Value"
-}
-
-
-
-
->>>>>>> dcead9d479b9b1f590f3e21158809fdc917f8cb9
