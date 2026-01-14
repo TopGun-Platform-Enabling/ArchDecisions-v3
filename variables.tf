@@ -20,3 +20,9 @@ variable "github_token" {
   type = string
 }
 
+
+variable "github_repository" {
+  description = "New repo reusability CI workflow"
+  type = string
+}
+
