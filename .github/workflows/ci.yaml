@@ -12,6 +12,7 @@ permissions:
   actions: write
   artifact-metadata: read
   repository-projects: write
+  security-events: write
 
 on:
   push:
@@ -23,7 +24,7 @@ jobs:
   # 1. Run reusable workflow (Terraform)
   # ---------------------------------------------------------
   terraform:
-    uses: ./.github/workflows/main-data.yml
+    uses: TopGun-Platform-Enabling/ArchDecisions/.github/workflows/main-data.yml@main
     secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
@@ -32,7 +33,7 @@ jobs:
   # ---------------------------------------------------------
   tests:
     needs: terraform
-    uses: ./.github/workflows/main-data.yml
+    uses: TopGun-Platform-Enabling/ArchDecisions/.github/workflows/main-data.yml@main
     secrets:
       INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
