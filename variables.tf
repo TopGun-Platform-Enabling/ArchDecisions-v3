@@ -26,7 +26,7 @@ variable "github_repository" {
   type = string
 }
 
-variable "INHERIT_TOKEN" {
+variable "INHERIT_TOKEN2" {
   type = string
 }
 
