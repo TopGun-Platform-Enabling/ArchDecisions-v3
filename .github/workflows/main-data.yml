@@ -26,21 +26,7 @@ jobs:
     continue-on-error: true
     env:
           TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-      name: Terraform Cleanup and Init
-
-on:
-  workflow_dispatch:
-
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
+          
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
