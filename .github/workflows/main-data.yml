@@ -12,8 +12,7 @@ permissions:
   security-events: write
 
 on:
-  push:
-    branches: [ "main", "SC-ArchDecisions-v3" ]
+  workflow_dispatch: 
   workflow_call: 
     secrets:
         INHERIT_TOKEN:
@@ -30,19 +29,33 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
+      name: Terraform Cleanup and Init
 
-      - name: Terraform Init (clean state)
-        working-directory: .
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Remove Terraform lock file
         run: |
-          echo "Cleaning Terraform state and reinitializing"
-          terraform init 
-          git add .terraform.lock.hcl
-          git commit -m "Pin GitHub provider to v6.x"
-          git push
+          if [ -f ".terraform.lock.hcl" ]; then
+            echo "Removing Terraform lock file..."
+            rm .terraform.lock.hcl
+          else
+            echo "No lock file found."
+          fi
+          
+      - name: Terraform Init
+        run: terraform init
 
       - name: Terraform Plan
         working-directory: .
