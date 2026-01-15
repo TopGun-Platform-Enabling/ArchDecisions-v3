@@ -11,7 +11,7 @@ terraform {
 # Configure the GitHub Provider
 # ID 254608100
 provider "github" {
-  owner = "TopGun-Platform-Enabling"
+  owner = "scgcptigerhub"
   token = var.github_token
 }
 
@@ -21,14 +21,14 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   target      = "branch"
   enforcement = "active"
 
-  # Bypass actors (correct schema for provider v6.x)
+# Bypass actors (correct schema for provider v6.x)
 bypass_actors {
   actor_id    = "1"
   actor_type  = "OrganizationAdmin"
   bypass_mode = "always"
 }
 
-  bypass_actors {
+bypass_actors {
     actor_id    = "5"
     actor_type  = "Team"
     bypass_mode = "pull_request"
