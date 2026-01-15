@@ -37,6 +37,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Debug token length
+        run: |
+          if [ -z "$TF_VAR_github_token" ]; then
+            echo "Token is EMPTY"
+          else
+            echo "Token length: ${#TF_VAR_github_token}"
+          fi
+        shell: bash
+
       - name: Remove Terraform lock file
         run: |
           if [ -f "modules/github-ruleset/.terraform.lock.hcl" ]; then
@@ -50,7 +59,7 @@ jobs:
         working-directory: .
         run: |
          terraform init 
-         #export TF_VAR_github_token=$VAR_INHERIT_TOKEN
+         export TF_VAR_github_token=$VAR_INHERIT_TOKEN
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
