@@ -15,10 +15,6 @@ permissions:
 
 on:
   workflow_dispatch: 
-  workflow_call: 
-    secrets:
-        INHERIT_TOKEN:
-          required: true
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
   merge_group:
@@ -95,7 +91,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply -auto-approve tfplan
+          terraform apply -var-file="terraform.tfvars"
         
   tests:
     runs-on: ubuntu-latest
