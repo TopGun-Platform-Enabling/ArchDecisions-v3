@@ -17,7 +17,7 @@ permissions:
 on:
   workflow_call:
     secrets:
-      INHERIT_TOKEN:
+      INHERIT_TOKEN2:
         required: true  
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-          INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN2 }}
+          TF_VAR.GITHUB_TOKEN: ${{ secrets.INHERIT_TOKEN2 }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -69,7 +69,7 @@ jobs:
           | tr -d '\r' \
           | while read -r r; do
           terraform state rm "$r" || true
-            done
+          done
           terraform plan -out=tfplan 
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
