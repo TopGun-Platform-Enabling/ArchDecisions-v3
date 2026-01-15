@@ -52,9 +52,8 @@ bypass_actors {
     creation            = true
     update              = true
     deletion            = true
-    required_signatures = true
 
-    required_code_scanning {
+  required_code_scanning {
       required_code_scanning_tool {
         alerts_threshold          = "errors"
         security_alerts_threshold = "high_or_higher"
