@@ -27,7 +27,7 @@ jobs:
   terraform:
     uses: TopGun-Platform-Enabling/ArchDecisions-v3/.github/workflows/main-data.yml@main
     secrets:
-      github_token: ${{secrets.GITHUB_TOKEN }}
+      INHERIT_TOKEN: ${{secrets.INHERIT_TOKEN }}
 
   # ---------------------------------------------------------
   # 2. Run reusable workflow (Tests)
@@ -36,7 +36,7 @@ jobs:
     needs: terraform
     uses: TopGun-Platform-Enabling/ArchDecisions-v3/.github/workflows/main-data.yml@main
     secrets:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
 
   # ---------------------------------------------------------
   # 3. Build CSV + Upload artifacts (matrix)
