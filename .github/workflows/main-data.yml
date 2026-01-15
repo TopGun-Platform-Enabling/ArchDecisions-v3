@@ -27,8 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-          secrets: ${{ secrets.INHERIT_TOKEN2 }}
-          
+          INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN2 }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -58,7 +57,7 @@ jobs:
         working-directory: .
         run: |
          rm -rf .terraform
-         terraform init -upgrade
+         terraform init
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
