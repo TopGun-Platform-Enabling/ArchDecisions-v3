@@ -27,6 +27,18 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   target      = "branch"
   enforcement = "active"
 
+  bypass_actors {
+      actor_id = "1"
+      type   = "users"
+      bypass_mode = "always"
+    }
+
+  bypass_actors {
+      actor_id = "5"
+      type   = "teams"
+      bypass_mode = "pull_requests_only"
+    }
+  }
   conditions {
     ref_name {
       include = [
@@ -38,7 +50,8 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
       ]
     }
   }
- 
+
+  
   rules {
     creation                = true
     update                  = true
@@ -56,18 +69,6 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
         tool                      = "CodeQL"
       }
     }
-      bypass_actors {
-      actor_id = "1"
-      type   = "users"
-      bypass_mode = "always"
-    }
-
-    bypass_actors {
-      actor_id = ""
-      type   = "teams"
-      bypass_mode = "pull_requests_only"
-    }
-  }
 }
 
 resource "github_repository" "ArchDecisions-v3" {
