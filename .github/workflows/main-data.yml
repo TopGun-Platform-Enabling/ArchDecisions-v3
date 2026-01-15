@@ -17,7 +17,7 @@ permissions:
 on:
   workflow_call:
     secrets:
-      TF_VAR_github_token:
+      TF_VAR_INHERIT_TOKEN:
         required: true  
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-      TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN2 }}
+      TF_VAR_INHERIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
