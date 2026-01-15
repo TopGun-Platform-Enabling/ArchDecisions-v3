@@ -94,7 +94,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply -var-file="terraform.tfvars"
+          terraform apply -var-file="terraform.tfvars" -auto-approve
         
   tests:
     runs-on: ubuntu-latest
