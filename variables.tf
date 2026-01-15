@@ -21,9 +21,12 @@ variable "github_token" {
   sensitive   = true
 }
 
-
 variable "github_repository" {
   description = "New repo reusability CI workflow"
+  type = string
+}
+
+variable "INHERIT_TOKEN" {
   type = string
 }
 
