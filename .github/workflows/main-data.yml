@@ -12,6 +12,7 @@ permissions:
   id-token: write
   actions: write
   security-events: write
+  repository-projects: write
 
 on:
   workflow_call:
@@ -32,7 +33,7 @@ jobs:
           
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -94,7 +95,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply -var-file="terraform.tfvars" -auto-approve
+          terraform apply tfplan
         
   tests:
     runs-on: ubuntu-latest
@@ -108,7 +109,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-
+          
+      # Panda, wheel and dependencies are crucial, unit tested working-directory
       - name: Install Python dependencies
         working-directory: .
         run: |
@@ -118,7 +120,8 @@ jobs:
             python -m pip install -r requirements.txt
           fi
 
-      - name: Run Basic Tests
+      # Cucumber-js will be installed and configured next to this, making sure the frame is vast
+      - name: Run Basic Tests for any further integration with Core Python
         run: |
           if ls test_*.py >/dev/null 2>&1; then
             pytest test_datalz22.py
