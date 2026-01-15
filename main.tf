@@ -56,7 +56,6 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
         tool                      = "CodeQL"
       }
     }
-<<<<<<< HEAD
       bypass_actors {
       actors = ["scgcptigerhub"]
       type   = "admins "
@@ -66,8 +65,21 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
       actors = ["TopGun-Platform-Enabling"]
       type   = "teams"
     }
-    
-=======
   }
 }
->>>>>>> 21de742a6a18493625072882a5fd344b5c49b50a
+
+resource "github_repository" "ArchDecisions-v3" {
+  name        = "ArchDecisions-v3"
+  description = "Architecture Decision Records for TopGun Platform Enabling Team - v3"
+  visibility  = "private"
+  has_issues  = true
+  has_wiki    = false
+  has_projects = false
+} 
+
+resource "github_branch" "main_branch" {
+  repository = github_repository.ArchDecisions-v3.name
+  branch     = "main"
+  depends_on = [github_repository.ArchDecisions-v3]
+}
+

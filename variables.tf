@@ -16,7 +16,14 @@ variable "required_status_checks" {
 }
 
 variable "github_token" {
-  description = "Inherited Org token and env variable for reusability CI workflow"
+  description = "GitHub token with appropriate permissions"
+  type        = string
+  sensitive   = true
+}
+
+
+variable "github_repository" {
+  description = "New repo reusability CI workflow"
   type = string
 }
 
