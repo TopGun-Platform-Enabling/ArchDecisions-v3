@@ -17,10 +17,9 @@ permissions:
 
 on:
   push:
-    branches: [ "ArchDecisions-v3" ]
+    branches: [ "main", "ArchDecisions-v3" ]
 
 jobs:
-
   # ---------------------------------------------------------
   # 1. Run reusable workflow (Terraform)
   # ---------------------------------------------------------
