@@ -1,4 +1,5 @@
-name: Integration Proof Data well-governed v3, functional tests via OpenSource Standards, reusing modular workflows
+name: Integration Proof Data well-governed v5, NFRT (non-functional regresion testing) via OpenSource Standards, reusing modular workflows
+run-name: "Python core driven engine for NRF requirements"
 
 env:
   NODE_VERSION: '20.x'
