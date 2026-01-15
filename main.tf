@@ -15,30 +15,26 @@ provider "github" {
   token = var.github_token
 }
 
-#resource "github_membership" "membership_for_user_x" {
-#  username = "scgcptigerhub"
-#  role     = "admin"
-#  depends_on = [github_repository.ArchDecisions-v3]
-#}
-
 resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   name        = var.name
   repository  = "ArchDecisions-v3"
   target      = "branch"
   enforcement = "active"
 
+  # Bypass actors (correct schema for provider v6.x)
   bypass_actors {
-      actor_id = "1"
-      type   = "users"
-      bypass_mode = "always"
-    }
+    actor_id    = "1"
+    actor_type  = "User"
+    bypass_mode = "always"
+  }
 
   bypass_actors {
-      actor_id = "5"
-      type   = "teams"
-      bypass_mode = "pull_requests_only"
-    }
+    actor_id    = "5"
+    actor_type  = "Team"
+    bypass_mode = "pull_request"
   }
+
+  # Conditions block must be inside the resource
   conditions {
     ref_name {
       include = [
@@ -51,16 +47,12 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
     }
   }
 
-  
+  # Rules block must also be inside the resource
   rules {
-    creation                = true
-    update                  = true
-    deletion                = true
-    required_signatures     = true
-
-    required_deployments {
-      required_deployment_environments = [" "]
-    }
+    creation            = true
+    update              = true
+    deletion            = true
+    required_signatures = true
 
     required_code_scanning {
       required_code_scanning_tool {
@@ -69,20 +61,5 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
         tool                      = "CodeQL"
       }
     }
+  }
 }
-
-resource "github_repository" "ArchDecisions-v3" {
-  name        = "ArchDecisions-v3"
-  description = "Architecture Decision Records for TopGun Platform Enabling Team - v3"
-  visibility  = "private"
-  has_issues  = true
-  has_wiki    = false
-  has_projects = false
-} 
-
-resource "github_branch" "main_branch" {
-  repository = github_repository.ArchDecisions-v3.name
-  branch     = "main"
-  depends_on = [github_repository.ArchDecisions-v3]
-}
-
