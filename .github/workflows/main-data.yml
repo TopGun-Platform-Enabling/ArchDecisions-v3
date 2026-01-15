@@ -18,11 +18,9 @@ on:
   workflow_call:
     secrets:
       INHERIT_TOKEN:
-        required: true
-  branch_protection_rule:   
+        required: true  
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
-  merge_group:
     
 jobs:
   terraform:
@@ -59,7 +57,7 @@ jobs:
       - name: Terraform Init
         working-directory: .
         run: |
-         terraform init 
+         terraform init -upgrade
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
@@ -95,7 +93,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply tfplan
+          terraform apply tfplan -auto-approve
         
   tests:
     runs-on: ubuntu-latest
