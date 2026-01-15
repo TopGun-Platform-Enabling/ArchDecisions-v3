@@ -14,7 +14,7 @@ permissions:
   security-events: write
 
 on:
-  workflow_dispatch: 
+  workflow_call: 
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
   merge_group:
@@ -55,7 +55,6 @@ jobs:
         working-directory: .
         run: |
          terraform init 
-         export TF_VAR_github_token=$VAR_INHERIT_TOKEN
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
