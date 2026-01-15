@@ -27,7 +27,7 @@ jobs:
   terraform:
     uses: TopGun-Platform-Enabling/ArchDecisions-v3/.github/workflows/main-data.yml@main
     secrets:
-      INHERIT_TOKEN: ${{secrets.INHERIT_TOKEN }}
+      INHERIT_TOKEN2: ${{secrets.INHERIT_TOKEN2 }}
 
   # ---------------------------------------------------------
   # 2. Run reusable workflow (Tests)
@@ -36,7 +36,7 @@ jobs:
     needs: terraform
     uses: TopGun-Platform-Enabling/ArchDecisions-v3/.github/workflows/main-data.yml@main
     secrets:
-      INHERIT_TOKEN: ${{ secrets.INHERIT_TOKEN }}
+      INHERIT_TOKEN2: ${{ secrets.INHERIT_TOKEN2 }}
 
   # ---------------------------------------------------------
   # 3. Build CSV + Upload artifacts (matrix)
@@ -107,4 +107,4 @@ jobs:
         run: |
           echo "All jobs completed. Summary of outputs:"
           echo "Terraform + tests reusable workflow completed."
-          echo "Allure report is available as an artifact."
+        echo "Allure report is available as an artifact."

@@ -11,13 +11,13 @@ terraform {
 # Configure the GitHub Provider
 # ID 254608100
 provider "github" {
-  owner = "scgcptigerhub"
+  owner = "TopGun-Platform-Enabling"
   token = var.github_token
 }
 
 resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   name        = var.name
-  repository  = "ArchDecisions-v3"
+  repository  = var.github_repository
   target      = "branch"
   enforcement = "active"
 
@@ -27,12 +27,6 @@ bypass_actors {
   actor_type  = "OrganizationAdmin"
   bypass_mode = "always"
 }
-
-bypass_actors {
-    actor_id    = "5"
-    actor_type  = "Team"
-    bypass_mode = "pull_request"
-  }
 
   # Conditions block must be inside the resource
   conditions {

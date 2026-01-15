@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-          secrets: ${{ secrets.INHERIT_TOKEN }}
+          secrets: ${{ secrets.INHERIT_TOKEN2 }}
           
     steps:
       - name: Checkout repository
@@ -38,18 +38,18 @@ jobs:
 
       - name: Debug token length
         run: |
-          if [ -z "$INHERIT_TOKEN" ]; then
+          if [ -z "$INHERIT_TOKEN2" ]; then
             echo "Token is EMPTY"
           else
-            echo "Token length: ${#INHERIT_TOKEN}"
+            echo "Token length: ${#INHERIT_TOKEN2}"
           fi
         shell: bash
 
-      - name: Remove Terraform lock file
+      - name: Remove Terraform lock files and folders
         run: |
           if [ -f "modules/github-ruleset/.terraform.lock.hcl" ]; then
             echo "Removing Terraform lock file..."
-            rm modules/github-ruleset/.terraform.lock.hcl
+            rm -rf modules/github-ruleset/.terraform.lock.hcl
             else
             echo "No lock file found."
           fi
@@ -57,6 +57,7 @@ jobs:
       - name: Terraform Init
         working-directory: .
         run: |
+         rm -rf .terraform
          terraform init -upgrade
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
