@@ -17,7 +17,7 @@ permissions:
 
 on:
   push:
-    branches-ignore: [ "ArchDecisions-v3" ]
+    branches: [ "ArchDecisions-v3" ]
 
 jobs:
 
