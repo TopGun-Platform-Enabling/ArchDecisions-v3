@@ -17,7 +17,7 @@ permissions:
 on:
   workflow_call:
     secrets:
-      TF_VAR_INHERIT_TOKEN:
+      TF_VAR_INHERIT_TOKEN2:
         required: true  
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-      TF_VAR_INHERIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TF_VAR_INHERIT_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -38,10 +38,10 @@ jobs:
 
       - name: Debug token length
         run: |
-          if [ -z "$INHERIT_TOKEN2" ]; then
+          if [ -z "$GITHUB_TOKEN" ]; then
             echo "Token is EMPTY"
           else
-            echo "Token length: ${#INHERIT_TOKEN2}"
+            echo "Token length: ${#GITHUB_TOKEN}"
           fi
         shell: bash
 
