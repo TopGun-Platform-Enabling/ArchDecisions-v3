@@ -40,8 +40,8 @@ jobs:
         run: |
           if [ -f "modules/github-ruleset/.terraform.lock.hcl" ]; then
             echo "Removing Terraform lock file..."
-            rm .terraform.lock.hcl
-          else
+            rm modules/github-ruleset/.terraform.lock.hcl
+            else
             echo "No lock file found."
           fi
           
