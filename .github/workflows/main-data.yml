@@ -94,7 +94,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply tfplan -auto-approve
+          terraform apply -auto-approve
         
   tests:
     runs-on: ubuntu-latest
