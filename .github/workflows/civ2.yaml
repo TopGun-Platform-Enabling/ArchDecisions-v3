@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: CheckOut repo sources and artifacts
-        uses: actions/checkout@<full-commit-sha>
+        uses: actions/checkout@v3
 
       - name: Build core and allure reporting
         run: ./Fetch_CSV.sh --version=${{ matrix.version }} >> DataResults.csv
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: CheckOut repo sources and artifacts
-        uses: actions/checkout@<full-commit-sha>
+        uses: actions/checkout@v3
         
       - name: Set up Node.js
         uses: actions/setup-node@v4
