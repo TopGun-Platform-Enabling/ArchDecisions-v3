@@ -39,7 +39,8 @@ jobs:
         working-directory: .
         run: |
           echo "Cleaning Terraform state and reinitializing"
-          terraform init -reconfigure
+          rm .terraform.lock.hcl
+          terraform init -upgrade
 
       - name: Terraform Plan
         working-directory: .
