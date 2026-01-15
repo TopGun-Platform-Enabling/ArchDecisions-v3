@@ -39,8 +39,10 @@ jobs:
         working-directory: .
         run: |
           echo "Cleaning Terraform state and reinitializing"
-          rm .terraform.lock.hcl
           terraform init -upgrade
+          git add .terraform.lock.hcl
+          git commit -m "Pin GitHub provider to v6.x"
+          git push
 
       - name: Terraform Plan
         working-directory: .
