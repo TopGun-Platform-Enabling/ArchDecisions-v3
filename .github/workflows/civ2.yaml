@@ -107,4 +107,4 @@ jobs:
         run: |
           echo "All jobs completed. Summary of outputs:"
           echo "Terraform + tests reusable workflow completed."
-        echo "Allure report is available as an artifact."
+          echo "Allure report is available as an artifact."
