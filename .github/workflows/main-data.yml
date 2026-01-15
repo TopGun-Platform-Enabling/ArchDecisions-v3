@@ -59,6 +59,14 @@ jobs:
           terraform plan -out=tfplan 
           echo "Terraform Validated and Plan is completed"
 
+      - name: Verify lock file exists at root
+        run: |
+          if [ ! -f ".terraform.lock.hcl" ]; then
+            echo "ERROR: Lock file missing at root"
+            exit 1
+          fi
+
+
       - name: Show Terraform Plan (text output)
         working-directory: .
         run: |
