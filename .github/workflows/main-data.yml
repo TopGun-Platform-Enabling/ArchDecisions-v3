@@ -47,18 +47,21 @@ jobs:
           fi
           
       - name: Terraform Init
-        run: terraform init -reconfigure
-
+        working-directory: .
+        run: |
+         terraform init 
+         #export TF_VAR_github_token=$VAR_INHERIT_TOKEN
+         echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
+         
       - name: Terraform Plan
         working-directory: .
         run: |
           set -e
-          export github_token=${{ secrets.INHERIT_TOKEN }}
            terraform state list | grep github_repository_ruleset | tr -d '\r' | while read -r r; do
            terraform state rm "$r" || true
            done;
           terraform plan -out=tfplan 
-          echo "Terraform Validated and Plan is completed"
+          echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
         run: |
@@ -67,7 +70,7 @@ jobs:
             exit 1
           fi
 
-
+      # Output of tfplan as proof for security audits and compliancy
       - name: Show Terraform Plan (text output)
         working-directory: .
         run: |
