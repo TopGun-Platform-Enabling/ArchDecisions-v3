@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-          TF_VAR_github_token: ${{ secrets.INHERIT_TOKEN }}
+          secrets: ${{ secrets.INHERIT_TOKEN }}
           
     steps:
       - name: Checkout repository
@@ -38,10 +38,10 @@ jobs:
 
       - name: Debug token length
         run: |
-          if [ -z "$TF_VAR_github_token" ]; then
+          if [ -z "$INHERIT_TOKEN" ]; then
             echo "Token is EMPTY"
           else
-            echo "Token length: ${#TF_VAR_github_token}"
+            echo "Token length: ${#INHERIT_TOKEN}"
           fi
         shell: bash
 
