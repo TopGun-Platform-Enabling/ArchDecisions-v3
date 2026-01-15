@@ -57,13 +57,15 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
       }
     }
       bypass_actors {
-      actors = ["scgcptigerhub"]
-      type   = "admins "
+      actor_id = "1"
+      type   = "users"
+      bypass_mode = "always"
     }
 
     bypass_actors {
-      actors = ["TopGun-Platform-Enabling"]
+      actor_id = ""
       type   = "teams"
+      bypass_mode = "pull_requests_only"
     }
   }
 }
