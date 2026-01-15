@@ -1,7 +1,9 @@
 # Landing Zone skeleton covering installment and dependencies for governance baseline and security
 # Nested workflows Integration launches main-data
 
-name: Landing Zone Data well-governed v4
+name: Landing Zone Data well-governed v5 
+
+run-name: "Well-Architected modular instantation workflow" 
 
 permissions:
   contents: write
@@ -30,6 +32,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
 
       - name: Remove Terraform lock file
         run: |
