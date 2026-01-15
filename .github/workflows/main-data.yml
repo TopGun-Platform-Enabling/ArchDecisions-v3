@@ -65,10 +65,13 @@ jobs:
       - name: Terraform Plan
         working-directory: .
         run: |
-          set -e
-           terraform state list | grep github_repository_ruleset | tr -d '\r' | while read -r r; do
-           terraform state rm "$r" || true
-           done;
+          terraform state list \
+          | grep github_repository_ruleset \
+          | grep -v "::" \
+          | tr -d '\r' \
+          | while read -r r; do
+          terraform state rm "$r" || true
+            done
           terraform plan -out=tfplan 
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
