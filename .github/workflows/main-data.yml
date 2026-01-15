@@ -21,7 +21,8 @@ on:
           required: true
   schedule:
     - cron: '0 3 * * 5'  # Weekly on Sundays at 3AM UTC
-
+  merge_group:
+    
 jobs:
   terraform:
     runs-on: ubuntu-latest
