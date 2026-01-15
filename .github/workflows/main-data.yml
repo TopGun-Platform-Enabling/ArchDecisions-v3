@@ -38,7 +38,7 @@ jobs:
 
       - name: Remove Terraform lock file
         run: |
-          if [ -f ".terraform.lock.hcl" ]; then
+          if [ -f "modules/github-ruleset/.terraform.lock.hcl" ]; then
             echo "Removing Terraform lock file..."
             rm .terraform.lock.hcl
           else
@@ -46,7 +46,7 @@ jobs:
           fi
           
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
 
       - name: Terraform Plan
         working-directory: .
