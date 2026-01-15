@@ -22,11 +22,11 @@ resource "github_repository_ruleset" "TigerHubv3_ruleset" {
   enforcement = "active"
 
   # Bypass actors (correct schema for provider v6.x)
-  bypass_actors {
-    actor_id    = "1"
-    actor_type  = "User"
-    bypass_mode = "always"
-  }
+bypass_actors {
+  actor_id    = "1"
+  actor_type  = "OrganizationAdmin"
+  bypass_mode = "always"
+}
 
   bypass_actors {
     actor_id    = "5"
