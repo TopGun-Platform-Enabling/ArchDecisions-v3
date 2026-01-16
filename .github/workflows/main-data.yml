@@ -31,7 +31,6 @@ jobs:
     continue-on-error: true
     env:
       TF_VAR_INHERIT_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
-      TERRAFORM_CLI_PATH: ${{ vars.TERRAFORM_CLI_PATH }}
       
     steps:
       - name: Checkout repository
@@ -39,6 +38,9 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
+        with:
+            terraform_version: latest
+            terraform_wrapper: false
 
       - name: Check Terraform version
         run: which terraform && terraform version
@@ -81,13 +83,12 @@ jobs:
           | while read -r r; do
           terraform state rm "$r" || true
           done
-         /usr/bin/terraform init -reconfigure -chdir=$TERRAFORM_CLI_PATH
+         /usr/bin/terraform init -reconfigure
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
-        working-directory: TERRAFORM_CLI_PATH
         run: |
-          /usr/bin/terraform plan -var-file="terraform.tfvars" -chdir=$TERRAFORM_CLI_PATH
+          /usr/bin/terraform plan -var-file="terraform.tfvars" 
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
