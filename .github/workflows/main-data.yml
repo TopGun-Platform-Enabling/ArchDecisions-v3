@@ -31,7 +31,7 @@ jobs:
     continue-on-error: true
     env:
       TF_VAR_INHERIT_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
-      TERRAFORM_CLI_PATH: ./terraform
+      TERRAFORM_CLI_PATH: ${{ vars.TERRAFORM_CLI_PATH }}
       
     steps:
       - name: Checkout repository
