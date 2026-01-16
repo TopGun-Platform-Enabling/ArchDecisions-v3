@@ -1,5 +1,6 @@
 # Landing Zone skeleton covering installment and dependencies for governance baseline and security
 # Nested workflows Integration launches main-data
+# Security Shift Left mechanism applied and more concretely rulesets and PR to be governed by Arch Tiger Team
 
 name: Landing Zone Data well-governed v5 
 
@@ -19,6 +20,8 @@ on:
   branch_protection_rule: 
   workflow_call:
     secrets:
+      GITHUB_TOKEN:
+        required: true
       TF_VAR_INHERIT_TOKEN2:
         required: true  
   schedule:
