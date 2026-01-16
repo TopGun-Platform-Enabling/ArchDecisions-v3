@@ -20,8 +20,7 @@ variable "github_repository" {
   type = string
 }
 
-variable "INHERIT_TOKEN2" {
+variable "inherit_token2" {
   type = string
-  sensitive = true
 }
 
