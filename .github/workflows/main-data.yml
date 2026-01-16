@@ -71,7 +71,7 @@ jobs:
       - name: Terraform Plan
         working-directory: .
         run: |
-          terraform plan -out=tfplan 
+          terraform plan -var-file="terraform.tfvars"
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
@@ -89,7 +89,7 @@ jobs:
             echo "ERROR: tfplan not found"
             exit 1
           fi
-          terraform show -no-color tfplan
+          terraform show -no-color 
 
       - name: Terraform Apply
         working-directory: .
