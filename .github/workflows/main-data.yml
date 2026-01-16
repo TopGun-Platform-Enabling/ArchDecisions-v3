@@ -83,12 +83,12 @@ jobs:
           | while read -r r; do
           terraform state rm "$r" || true
           done
-         /usr/bin/terraform init -reconfigure
+         terraform init -reconfigure
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
         run: |
-          /usr/bin/terraform plan -var-file="terraform.tfvars" 
+          terraform plan -var-file="terraform.tfvars" 
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
@@ -110,7 +110,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          /usr/bin/terraform apply -auto-approve
+          terraform apply -auto-approve
         
   tests:
     runs-on: ubuntu-latest
