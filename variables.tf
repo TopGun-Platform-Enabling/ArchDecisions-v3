@@ -28,5 +28,6 @@ variable "github_repository" {
 
 variable "INHERIT_TOKEN2" {
   type = string
+  sensitive = true
 }
 
