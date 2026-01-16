@@ -20,8 +20,6 @@ on:
   branch_protection_rule: 
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
-        required: true
       TF_VAR_INHERIT_TOKEN2:
         required: true  
   schedule:
@@ -54,7 +52,6 @@ jobs:
         working-directory: TERRAFORM_CLI_PATH
         run: |
            grep -R "github_token" -n .
-
 
       - name: Remove Terraform lock files and folders
         run: |
