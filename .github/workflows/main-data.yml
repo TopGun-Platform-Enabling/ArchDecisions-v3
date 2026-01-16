@@ -81,13 +81,13 @@ jobs:
           | while read -r r; do
           terraform state rm "$r" || true
           done
-         terraform init -reconfigure -chdir=$TERRAFORM_CLI_PATH
+         /usr/bin/terraform init -reconfigure -chdir=$TERRAFORM_CLI_PATH
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
         working-directory: TERRAFORM_CLI_PATH
         run: |
-          terraform plan -var-file="terraform.tfvars" -chdir=$TERRAFORM_CLI_PATH
+          /usr/bin/terraform plan -var-file="terraform.tfvars" -chdir=$TERRAFORM_CLI_PATH
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
@@ -99,7 +99,6 @@ jobs:
 
       # Output of tfplan as proof for security audits and compliancy
       - name: Show Terraform Plan (text output)
-        working-directory: .
         run: |
           if [ ! -f tfplan ]; then
             echo "ERROR: tfplan not found"
@@ -110,7 +109,7 @@ jobs:
       - name: Terraform Apply
         working-directory: .
         run: |
-          terraform apply -auto-approve
+          /usr/bin/terraform apply -auto-approve
         
   tests:
     runs-on: ubuntu-latest
