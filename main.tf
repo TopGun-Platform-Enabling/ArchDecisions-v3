@@ -15,7 +15,7 @@ provider "github" {
   token = var.inherit_token2
 }
 
-resource "github_repository_ruleset" "TigerHubv3_ruleset" {
+resource "github_repository_ruleset" "TigerHubv3" {
   name        = var.name
   repository  = var.github_repository
   target      = "branch"
@@ -43,7 +43,7 @@ bypass_actors {
 
   # Rules block must also be inside the resource
   rules {
-    creation            = true
+    creation            = false
     update              = true
     deletion            = true
 
