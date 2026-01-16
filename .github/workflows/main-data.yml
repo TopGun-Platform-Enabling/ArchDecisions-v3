@@ -56,6 +56,12 @@ jobs:
         run: |
            grep -R "github_token" -n .
 
+      - name: Force correct Terraform binary
+        run: |
+          sudo rm -f /home/runner/work/_temp/*/terraform-bin || true
+          which terraform
+          terraform version
+
       - name: Remove Terraform lock files and folders
         run: |
           if [ -f ".terraform.lock.hcl" ]; then
@@ -66,7 +72,6 @@ jobs:
           fi
           
       - name: Terraform Init
-        working-directory: .
         run: |
          # rm -rf .terraform
          terraform state list \
