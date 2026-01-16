@@ -101,14 +101,9 @@ jobs:
       # Output of tfplan as proof for security audits and compliancy
       - name: Show Terraform Plan (text output)
         run: |
-          if [ ! -f tfplan ]; then
-            echo "ERROR: tfplan not found"
-            exit 1
-          fi
           terraform show -no-color 
 
       - name: Terraform Apply
-        working-directory: .
         run: |
           terraform apply -auto-approve
         
