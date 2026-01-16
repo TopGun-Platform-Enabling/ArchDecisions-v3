@@ -31,7 +31,8 @@ jobs:
     continue-on-error: true
     env:
       TF_VAR_INHERIT_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
-
+      TERRAFORM_CLI_PATH: ./terraform
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -41,15 +42,15 @@ jobs:
 
       - name: Debug token length
         run: |
-          if [ -z "$GITHUB_TOKEN" ]; then
+          if [ -z "$INHERIT_TOKEN2" ]; then
             echo "Token is EMPTY"
           else
-            echo "Token length: ${#GITHUB_TOKEN}"
+            echo "Token length: ${#INHERIT_TOKEN2}"
           fi
         shell: bash
 
       - name: Debug Old Token Parsing
-        working-directory: TERRAFORM_CLI_PATH
+        working-directory: .
         run: |
            grep -R "github_token" -n .
 
@@ -73,13 +74,13 @@ jobs:
           | while read -r r; do
           terraform state rm "$r" || true
           done
-         terraform init -reconfigure
+         terraform init -reconfigure -chdir=$TERRAFORM_CLI_PATH
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
         working-directory: TERRAFORM_CLI_PATH
         run: |
-          terraform plan -var-file="terraform.tfvars"
+          terraform plan -var-file="terraform.tfvars" -chdir=$TERRAFORM_CLI_PATH
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
       - name: Verify lock file exists at root
