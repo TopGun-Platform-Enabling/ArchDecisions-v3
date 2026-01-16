@@ -12,7 +12,7 @@ terraform {
 # ID 254608100
 provider "github" {
   owner = "TopGun-Platform-Enabling"
-  token = var.INHERIT_TOKEN2
+  token = var.inherit_token2
 }
 
 resource "github_repository_ruleset" "TigerHubv3_ruleset" {
