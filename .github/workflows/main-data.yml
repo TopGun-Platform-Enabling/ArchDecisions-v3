@@ -40,6 +40,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Check Terraform version
+        run: which terraform && terraform version
+        
       - name: Debug token length
         run: |
           if [ -z "$INHERIT_TOKEN2" ]; then
@@ -50,7 +53,6 @@ jobs:
         shell: bash
 
       - name: Debug Old Token Parsing
-        working-directory: .
         run: |
            grep -R "github_token" -n .
 
