@@ -15,12 +15,6 @@ variable "required_status_checks" {
   default     = []
 }
 
-variable "github_token" {
-  description = "GitHub token with appropriate permissions"
-  type        = string
-  sensitive   = true
-}
-
 variable "github_repository" {
   description = "New repo reusability CI workflow"
   type = string
