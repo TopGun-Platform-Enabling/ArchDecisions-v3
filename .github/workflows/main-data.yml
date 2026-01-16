@@ -47,9 +47,9 @@ jobs:
 
       - name: Remove Terraform lock files and folders
         run: |
-          if [ -f "modules/github-ruleset/.terraform.lock.hcl" ]; then
+          if [ -f ".terraform.lock.hcl" ]; then
             echo "Removing Terraform lock file..."
-            rm -rf modules/github-ruleset/.terraform.lock.hcl
+            rm -rf .terraform.lock.hcl
             else
             echo "No lock file found."
           fi
@@ -57,7 +57,7 @@ jobs:
       - name: Terraform Init
         working-directory: .
         run: |
-         rm -rf .terraform
+         # rm -rf .terraform
          terraform state list \
           | grep github_repository_ruleset \
           | grep -v "::" \
@@ -65,7 +65,7 @@ jobs:
           | while read -r r; do
           terraform state rm "$r" || true
           done
-         terraform init -upgrade
+         terraform init -reconfigure
          echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
          
       - name: Terraform Plan
