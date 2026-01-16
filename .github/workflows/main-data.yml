@@ -58,19 +58,19 @@ jobs:
         working-directory: .
         run: |
          rm -rf .terraform
-         terraform init
-         echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
-         
-      - name: Terraform Plan
-        working-directory: .
-        run: |
-          terraform state list \
+         terraform state list \
           | grep github_repository_ruleset \
           | grep -v "::" \
           | tr -d '\r' \
           | while read -r r; do
           terraform state rm "$r" || true
           done
+         terraform init -upgrade
+         echo "Clean install with corrected providers, upgrade might be optional and block providers are different, we choose the stable version for integration modules"
+         
+      - name: Terraform Plan
+        working-directory: .
+        run: |
           terraform plan -out=tfplan 
           echo "Terraform Config is all validated and completed, promote to prod github runner can continue"
 
