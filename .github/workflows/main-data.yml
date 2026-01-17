@@ -29,8 +29,6 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     continue-on-error: true
-    env:
-      TF_VAR_INHERIT_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
       
     steps:
       - name: Checkout repository
