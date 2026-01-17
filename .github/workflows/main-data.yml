@@ -31,6 +31,11 @@ jobs:
     continue-on-error: true
       
     steps:
+
+      - name: Remove cached Git credentials
+        run:
+          git config --global --replace-all credential.helper cache
+          
       - name: Checkout repository
         uses: actions/checkout@v3
 
