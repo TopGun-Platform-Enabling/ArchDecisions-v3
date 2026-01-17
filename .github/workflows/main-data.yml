@@ -45,10 +45,10 @@ jobs:
         
       - name: Debug token length
         run: |
-          if [ -z "$INHERIT_TOKEN2" ]; then
+          if [ -z "$TF_VAR_INHERIT_TOKEN2" ]; then
             echo "Token is EMPTY"
           else
-            echo "Token length: ${#INHERIT_TOKEN2}"
+            echo "Token length: ${#TF_VAR_INHERIT_TOKEN2}"
           fi
         shell: bash
 
